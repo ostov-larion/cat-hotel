@@ -167,18 +167,38 @@ Sounds["Лестница (сломано)"] = () => {
 }
 Sounds["Подвал"] = () => {
 	water.play()
-}</script><tw-passagedata pid="1" name="Заставка" tags="" position="300,100" size="100,100"># Cat Hotel
+}
+
+window.Harlowe = State
+$(document).on('keyup', ev => {
+	if(!State.variables.qte) State.variables.qte = "key"
+	State.variables.qte += ":"+ev.code.replace("Key","")
+	if(State.variables.qte.split(":").length >= 5) State.variables.qte = "key"
+	return false
+})</script><tw-passagedata pid="1" name="Заставка" tags="" position="300,100" size="100,100"># Cat Hotel
 {(set: $reason to 7)
 (set: $battery to 0)
 (set: $harry to 3)
 (set: $stairs_key to 0)
 (set: $first_rec to 1)
 &lt;!--(set: $r1 to 1)--&gt;
+(live: 5s)[
+(set: $test to $test + 1)
+]
 }
 [[Открыть дверь-&gt;Коридор]]
 (link: &quot;Подохнуть&quot;)[(set: $death to &quot;Достижение получено: умереть у двери&quot;)(goto: &quot;Dead End&quot;)]
 //(text-colour:(hsl:0,0,1,0.35))[(align:&quot;&lt;==&quot;)+(box:&quot;X=&quot;)[&quot;Вокруг нас разбросаны ответы на любые вопросы, надо только суметь отыскать их.&quot;]]//
-&lt;!--&quot;Любые достаточно сильные стрессы, позитивные или негативные, равно способны искалечить наш рассудок и даровать нам идеи и способности, которые мы не можем обрести никаким иным способом...&quot;--&gt;</tw-passagedata><tw-passagedata pid="2" name="Коридор" tags="" position="300,225" size="100,100">## Коридор &lt;script&gt;Sounds[&quot;Коридор&quot;]()&lt;/script&gt;
+&lt;!--&quot;Любые достаточно сильные стрессы, позитивные или негативные, равно способны искалечить наш рассудок и даровать нам идеи и способности, которые мы не можем обрести никаким иным способом...&quot;--&gt;
+
+{(set: $qte_pattern to &quot;key:D:E:F&quot;)
+(set: $time to 7)
+|qte_msg)[Набери DEF на клавиатуре.]
+|timein)[OK]
+|timeout)[NOOOO!]
+(display: &quot;qte&quot;)
+}</tw-passagedata><tw-passagedata pid="2" name="Коридор" tags="" position="300,225" size="100,100">## Коридор &lt;script&gt;Sounds[&quot;Коридор&quot;]()&lt;/script&gt;
+$test
 За дверью показался темный коридор. Одинокая лампочка под потолком освещала лишь дальнюю часть помещения красным. Мой напарник Гарри потянул меня за плечо, находясь позади и уточнил:
 
 - Нам точно стоит идти сюда ночью?
@@ -201,6 +221,7 @@ Sounds["Подвал"] = () => {
 [[Дверь справа-&gt;Склад]]
 [[Дверь слева-&gt;Ресепшн]]
 [[Дверь спереди-&gt;Лестница]]</tw-passagedata><tw-passagedata pid="3" name="Склад" tags="" position="175,225" size="100,100">## Склад &lt;script&gt;Sounds[&quot;Склад&quot;]()&lt;/script&gt;
+$test
 Отворив дверь справа, за ним оказалась небольшая комнатушка со всяким барахлом. В основном инструменты и коробки с расходными материалами, по типу салфеток, туалетной бумаги и тряпок. Пройдя за стеллаж с коробками мы оказались посреди самой настоящей мусорки. Ощущение, что, все что в какой либо момент показалось ненужным - бросали сюда и оно тут оставалось навсегда. Мы могли бы осмотреть здесь комнатушку на наличие улик или зацепок, но дрожащий Гарри, очень не хотел тут оставаться и не давал мне тем самым сосредоточиться. &lt;!-- ХУЙ --&gt;
 
 (click: &quot;стеллаж&quot;)[Между коробками на стеллаже я нашел ни много, ни мало полезнейшую вещь - ломик. (set: $lomik to 1)
@@ -568,6 +589,7 @@ Sounds["Подвал"] = () => {
 (click: &quot;изолента&quot;)[Отлично! Изолента есть.(set: $izolenta to 1)]
 (click: &quot;тарелка&quot;)[(if: $plumberunknown is 1)[Я осмотрел тарелку с едой, и... Суп был горячим.](else:)[Я осмотрел тарелку с едой. Поводил ложкой. Обычный суп, никакой мерзости.]]
 (if: $pchoice is 1 and $plumberunknown is 1)[]
+&lt;script&gt;setTimeout(() =&gt; timeoff = true, 1000 * 60)&lt;/script&gt;
 [[Подвал: Комната6]]</tw-passagedata><tw-passagedata pid="18" name="Подвал: Комната3(выше)" tags="" position="175,350" size="100,100">Замарав плащ о пыльные кирпичи, я все же пробрался в небольшую комнатушку. На стене была аварийная лампа под плафоном с красным освещением. Прямо посреди комнаты была дыра в полу, из которой торчала нижняя часть обычного человека. К нему вели размазанные по полу следы крови, которые уходили за тяжелую деревянную дверь. 
 
 - Первое тело... Значит, должны быть хоть какие то улики.
@@ -578,7 +600,7 @@ Sounds["Подвал"] = () => {
 (click: &quot;щеколда&quot;)[Я отворил дверь. За ней показался лестничный пролет.(set: $roomwithdeadbodyopen to 1)]
 (click: &quot;лестничный пролет&quot;)[(goto: &quot;Лестница&quot;)]
 
-[[Склад-&gt;Склад]]</tw-passagedata><tw-passagedata pid="19" name="timer" tags="" position="426,476" size="100,100">&lt;!-- Timer Component Implementation --&gt;
+[[Склад-&gt;Склад]]</tw-passagedata><tw-passagedata pid="19" name="timer" tags="" position="699,402" size="100,100">&lt;!-- Timer Component Implementation --&gt;
 {
 (set: $timeout to false)
 (set: $timer_click to 0)
@@ -607,7 +629,17 @@ Sounds["Подвал"] = () => {
 [[НАЧАТЬ ЗАНОВО-&gt;Play Again]]</tw-passagedata><tw-passagedata pid="21" name="Play Again" tags="" position="500,100" size="100,100">&lt;script&gt;
 sessionStorage.clear()
 location.reload()
-&lt;/script&gt;</tw-passagedata></tw-storydata>
+&lt;/script&gt;</tw-passagedata><tw-passagedata pid="22" name="qte" tags="" position="802,400.5" size="100,100">&lt;!-- QTE Component Implementation --&gt;
+{
+(set: $timeout to false)
+(live: 1s)[
+(set: $time to $time - 1)
+(if: $qte is $qte_pattern)[(show: ?timein)]
+(if: $time is 0 or $qte is $qte_pattern)[(hide: ?meter)(hide: ?qte_msg)(stop:)]
+]
+|meter&gt;[(css: &quot;display: block; height: 5px; overflow: hidden;&quot;)[(meter: bind $time, 12, &quot;X&quot;, #800)]]
+(show: ?qte_msg)
+(event: when $time is 0)[(show: ?timeout)(set: $timeout to true)]}</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">"use strict";var _slicedToArray=function(){return function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],r=!0,a=!1,i=void 0;try{for(var o,s=e[Symbol.iterator]();!(r=(o=s.next()).done)&&(n.push(o.value),!t||n.length!==t);r=!0);}catch(e){a=!0,i=e}finally{try{!r&&s.return&&s.return()}finally{if(a)throw i}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};function _defineProperty(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function _toConsumableArray(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}!function(){
 /**
  * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
